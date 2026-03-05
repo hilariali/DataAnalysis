@@ -49,14 +49,16 @@ def main() -> None:
         "distribution."
     )
 
-    raw_input = st.text_area(
-        label="Paste your data here (one value per line)",
-        height=200,
-        placeholder="12.5\n14.3\n11.8\n13.0\n...",
-    )
+    with st.form("data_form"):
+        raw_input = st.text_area(
+            label="Paste your data here (one value per line)",
+            height=200,
+            placeholder="12.5\n14.3\n11.8\n13.0\n...",
+        )
+        submitted = st.form_submit_button("📊 Generate Distribution", use_container_width=True)
 
-    if not raw_input.strip():
-        st.info("👆 Paste your data above to get started.")
+    if not submitted or not raw_input.strip():
+        st.info("👆 Paste your data above and click **Generate Distribution** to get started.")
         return
 
     values, skipped = parse_input(raw_input)
